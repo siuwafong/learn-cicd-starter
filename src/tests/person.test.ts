@@ -7,7 +7,7 @@ const person = {
 
 describe("person", () => {
   test("person is defined", () => {
-    expect(person).not.toBeDefined();
+    expect(person).toBeDefined();
   });
 
   test("is active", () => {
