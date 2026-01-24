@@ -40,4 +40,4 @@ jobs:
         run: 'gcloud info'
 
       - name: 'Deploy'
-        run: 'gcloud builds submit --tag REGION-docker.pkg.dev/notely_wilson-fong/notely-ar-repo/notely-v1 .'
+        run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely_wilson-fong/notely-ar-repo/notely-v1 .'
