@@ -15,6 +15,8 @@ if (!config.api.port) {
   process.exit(1);
 }
 
+const port = Number(process.env.PORT || config.api.port);
+
 const app = express();
 app.use(express.json());
 
@@ -44,6 +46,6 @@ v1Router.get("/healthz", handlerReadiness);
 
 app.use("/v1", v1Router);
 
-app.listen(process.env.PORT || config.api.port, () => {
+app.listen(port, () => {
   console.log(`Server is running on port: ${config.api.port}`);
 });
