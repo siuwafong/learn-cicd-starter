@@ -25,3 +25,19 @@ jobs:
 
       - name: Build
         run: npm run build
+        
+      - id: 'authenticate_gcp'
+        uses: 'google-github-actions/auth@v2'
+        with:
+            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v3'
+        with:
+            version: '>= 363.0.0'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: 'Deploy'
+        run: 'gcloud builds submit --tag REGION-docker.pkg.dev/notely_wilson-fong/notely-ar-repo/notely-v1 .'
