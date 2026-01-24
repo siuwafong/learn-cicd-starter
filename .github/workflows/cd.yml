@@ -39,5 +39,8 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
 
+      - name: 'Run gcloud list command'
+      - run: 'gcloud auth list'
+
       - name: 'Deploy'
-        run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely_wilson-fong/notely-ar-repo/notely-v1 .'
+        run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-wilson-fong/notely-ar-repo/notely-v1 .'
