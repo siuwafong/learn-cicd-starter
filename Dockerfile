@@ -1,22 +1,22 @@
-# Stage 1: Build the application with a fuller Node.js image
-FROM --platform=linux/amd64 node:18 AS builder
-
-WORKDIR /usr/src/app
-
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-# Stage 2: Create a slim runtime image
+# Build for Cloud Run architecture
 FROM --platform=linux/amd64 node:18-slim
 
 WORKDIR /usr/src/app
 
-# Copy only necessary files from the builder stage
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-COPY --from=builder /usr/src/app/package.json ./package.json
+# Copy only package files first (caching)
+COPY package.json package-lock.json ./
 
+# Install dependencies inside container
+RUN npm ci
+
+# Copy the rest of the app
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Cloud Run uses PORT=8080
 ENV PORT=8080
+
+# Bind to 0.0.0.0 in your app (main.ts)
 CMD ["node", "dist/main.js"]
